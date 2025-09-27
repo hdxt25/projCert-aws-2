@@ -57,13 +57,13 @@ pipeline {
             }
         }
     }
-}
+    
     post {
         failure {
             echo 'Job 3 failed. Cleaning up container on test server...'
-            sh """
-                docker rm -f $DOCKER_CONTAINER || true
-            """
+                sh """
+                    docker rm -f $DOCKER_CONTAINER || true
+                """
         }
     }
 }
