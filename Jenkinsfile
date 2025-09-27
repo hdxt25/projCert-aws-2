@@ -7,7 +7,7 @@ pipeline {
     }
 
     stages {
-        stage('Install Puppet Agent on Slave') {
+        stage('Install Puppet Agent on Slave(Job 1)') {
             steps {
                     sshagent(['test-server-ssh']) {
                         sh 'ansible-playbook -i inventory ./ansible/install-puppet.yml'
