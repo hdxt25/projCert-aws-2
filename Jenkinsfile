@@ -7,12 +7,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout Code') {
-            steps {
-                git branch: 'master', url: 'https://github.com/hdxt25/projCert.git'
-            }
-        }
-
         stage('Install Puppet Agent on Slave') {
             steps {
                     sshagent(['test-server-ssh']) {
