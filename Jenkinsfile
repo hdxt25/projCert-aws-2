@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { label 'test-server' }
 
     environment {
         DOCKER_IMAGE = "php-webapp"
