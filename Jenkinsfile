@@ -1,7 +1,7 @@
 pipeline {
     agent {
         dockerfile {
-            filename 'agent/Dockerfile'
+            filename 'Dockerfile'
             dir './agent'
             args '--name test-server -v /var/run/docker.sock:/var/run/docker.sock'
         }
@@ -47,7 +47,9 @@ pipeline {
     post {
         failure {
             echo 'Build failed. Cleaning up container...'
-            sh 'docker rm -f ${DOCKER_CONTAINER} || true'
+            script {
+                sh 'docker rm -f ${DOCKER_CONTAINER} || true'
+            }
         }
     }
 }
