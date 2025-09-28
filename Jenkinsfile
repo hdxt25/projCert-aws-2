@@ -3,7 +3,7 @@ pipeline {
         dockerfile {
             filename 'Dockerfile'
             dir './agent'
-            args '--name test-server -v /var/run/docker.sock:/var/run/docker.sock'
+            args '--name test-server -u root:root -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
 
@@ -16,13 +16,13 @@ pipeline {
         stage('Install Puppet Agent') {
             steps {
                 
-                sh 'ansible-playbook -i inventory ./ansible/install-puppet.yml --connection=local'
+                sh 'ansible-playbook -i inventory ./ansible/install-puppet.yml --connection=local --become=yes'
             }        
         }
 
         stage('Install Docker with Ansible') {
             steps {
-                sh 'ansible-playbook -i inventory ./ansible/install-docker.yml --connection=local'
+                sh 'ansible-playbook -i inventory ./ansible/install-docker.yml --connection=local --become=yes'
             }
         }    
 
