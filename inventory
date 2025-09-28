@@ -1,2 +1,2 @@
 [testserver]
-34.200.225.53 ansible_user=ubuntu
+test-server ansible_connection=docker

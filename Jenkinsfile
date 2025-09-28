@@ -1,16 +1,18 @@
 pipeline {
-    agent { label 'test-server' }
-
-    environment {
-        DOCKER_IMAGE = "php-webapp"
-        DOCKER_CONTAINER = "php-webapp-container"
+    agent {
+        dockerfile {
+            filename 'agent/Dockerfile'   // Path to your Dockerfile
+            dir './agent'                 // Directory containing Dockerfile
+            args '--name test-server' 
+            args '-v /var/run/docker.sock:/var/run/docker.sock'         // optional: Jenkins node label with Docker installed
+        }
     }
 
     stages {
         stage('Install Puppet Agent on Slave(Job 1)') {
             steps {
                     sshagent(['test-server-ssh']) {
-                        sh 'ansible-playbook -i inventory ./ansible/install-puppet.yml'
+                        sh 'ansible-playbook -i inventory ./ansible/install-puppet.yml --connection=docker'
                     }
             }        
         }
@@ -18,7 +20,7 @@ pipeline {
         stage('Install Docker with Ansible (Job 2)') {
             steps {
                 sshagent(['test-server-ssh']) {
-                    sh 'ansible-playbook -i inventory ./ansible/install-docker.yml'
+                    sh 'ansible-playbook -i inventory ./ansible/install-docker.yml --connection=docker'
                 }
             }
         }    
