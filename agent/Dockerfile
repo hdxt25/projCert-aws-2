@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install -y \
 
 # Switch to jenkins user
 USER root
-RUN mkdir -p /root/.ansible/work 
+RUN mkdir -p /root/work 
 
 WORKDIR /work
 

@@ -15,14 +15,14 @@ pipeline {
     stages {  
         stage('Install Puppet Agent') {
             steps {
-                sh 'chmod 744 ./ansible/*.yml'
-                sh 'ansible-playbook -i inventory ./ansible/install-puppet.yml --connection=docker'
+                mkdir -p /.ansible && chmod -R 777 /.ansible
+                sh 'ansible-playbook -i inventory ./ansible/install-puppet.yml --connection=local'
             }        
         }
 
         stage('Install Docker with Ansible') {
             steps {
-                sh 'ansible-playbook -i inventory ./ansible/install-docker.yml --connection=docker'
+                sh 'ansible-playbook -i inventory ./ansible/install-docker.yml --connection=local'
             }
         }    
 
