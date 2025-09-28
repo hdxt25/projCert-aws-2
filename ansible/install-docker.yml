@@ -14,8 +14,4 @@
         name: docker.io
         state: present
 
-    - name: Ensure Docker service is started
-      service:
-        name: docker
-        state: started
-        enabled: yes
+    
