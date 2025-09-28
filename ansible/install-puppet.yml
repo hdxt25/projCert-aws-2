@@ -1,28 +1,38 @@
+---
 - name: Install and configure Puppet agent
-  hosts: local
+  hosts: localhost
   become: yes
+  connection: local
+
   tasks:
     - name: Update apt cache
-      apt: update_cache=yes
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
     - name: Install dependencies
-      apt: name="{{ item }}" state=present
+      apt:
+        name: "{{ item }}"
+        state: present
       loop:
         - wget
         - lsb-release
         - ca-certificates
+
     - name: Download Puppet agent package
       get_url:
-        url: "https://apt.puppet.com/puppet7-release-$(lsb_release -cs).deb"
+        url: "https://apt.puppet.com/puppet7-release-{{ ansible_distribution_release }}.deb"
         dest: /tmp/puppet-release.deb
-    - name: Install Puppet release package
-      apt: deb=/tmp/puppet-release.deb
+
+    - name: Install Puppet repository package
+      apt:
+        deb: /tmp/puppet-release.deb
+
+    - name: Update apt cache again after repo install
+      apt:
+        update_cache: yes
+
     - name: Install Puppet agent
-      apt: name=puppet-agent state=present update_cache=yes
-    - name: Enable Puppet service
-      systemd: name=puppet state=started enabled=yes
-    - name: Configure Puppet to connect to Puppet Master
-      lineinfile:
-        path: /etc/puppetlabs/puppet/puppet.conf
-        section: main
-        option: server
-        value: puppet-master.example.com
+      apt:
+        name: puppet-agent
+        state: present

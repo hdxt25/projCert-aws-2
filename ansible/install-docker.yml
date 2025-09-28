@@ -1,21 +1,53 @@
-- name: Install Docker on Test Server
-  hosts: local
+---
+- name: Install and configure Docker
+  hosts: localhost
   become: yes
+  connection: local
+
   tasks:
     - name: Update apt cache
-      apt: update_cache=yes
-    - name: Install dependencies
-      apt: name="{{ item }}" state=present
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install required dependencies
+      apt:
+        name: "{{ item }}"
+        state: present
       loop:
         - apt-transport-https
         - ca-certificates
         - curl
         - software-properties-common
+        - gnupg
+        - lsb-release
+
     - name: Add Docker GPG key
-      apt_key: url=https://download.docker.com/linux/ubuntu/gpg state=present
-    - name: Add Docker repo
-      apt_repository: repo='deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable' state=present
-    - name: Install Docker
-      apt: name=docker-ce state=present update_cache=yes
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+        state: present
+        filename: docker
+
+    - name: Update apt cache after adding repo
+      apt:
+        update_cache: yes
+
+    - name: Install Docker CE and CLI
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+
     - name: Ensure Docker service is started
-      service: name=docker state=started enabled=yes
+      service:
+        name: docker
+        state: started
+        enabled: yes
