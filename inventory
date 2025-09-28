@@ -1,2 +1,2 @@
-[testserver]
-test-server ansible_connection=docker
+[local]
+localhost ansible_connection=local

@@ -1,5 +1,5 @@
 - name: Install Docker on Test Server
-  hosts: testserver
+  hosts: local
   become: yes
   tasks:
     - name: Update apt cache

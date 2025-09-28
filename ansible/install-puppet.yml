@@ -1,5 +1,5 @@
 - name: Install and configure Puppet agent
-  hosts: slave
+  hosts: local
   become: yes
   tasks:
     - name: Update apt cache
