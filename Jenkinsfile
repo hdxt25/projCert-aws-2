@@ -1,19 +1,17 @@
 pipeline {
-    agent {
-        dockerfile {
-            filename 'Dockerfile'
-            dir './agent'
-            args '--name test-server -u root:root -v /var/run/docker.sock:/var/run/docker.sock'
-            reuseNode true
-        }
-    }
+    agent {    label  "agent1" }
 
     environment {
-        DOCKER_IMAGE = "hdxt25/php-website:${BUILD_NUMBER}"
-        DOCKER_CONTAINER = "php-container"
+        DOCKER_IMAGE = "hdxt25/php-website2:${BUILD_NUMBER}"
+        DOCKER_CONTAINER = "php-container2"
     }
 
     stages {  
+        stage ("check out code") {
+            steps {
+                git url: 'https://github.com/hdxt25/projCert.git', branch: 'master'
+            }
+        }
         stage('Install Puppet Agent') {
             steps {
                 
@@ -84,4 +82,3 @@ pipeline {
         }
     }
 }
-
