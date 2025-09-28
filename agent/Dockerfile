@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y \
 
 
 
-# Switch to jenkins user
+# Switch to root
 USER root
 RUN mkdir -p /.ansible && chmod -R 777 /.ansible
 RUN mkdir -p ./work 
