@@ -15,7 +15,7 @@ pipeline {
     stages {  
         stage('Install Puppet Agent') {
             steps {
-                mkdir -p /.ansible && chmod -R 777 /.ansible
+                
                 sh 'ansible-playbook -i inventory ./ansible/install-puppet.yml --connection=local'
             }        
         }
