@@ -16,13 +16,13 @@ pipeline {
         stage('Install Puppet Agent') {
             steps {
                 
-                sh 'ansible-playbook -i inventory ./ansible/install-puppet.yml --connection=local'
+                sh 'ansible-playbook ./ansible/install-puppet.yml --connection=local'
             }        
         }
 
         stage('Install Docker with Ansible') {
             steps {
-                sh 'ansible-playbook -i inventory ./ansible/install-docker.yml --connection=local'
+                sh 'ansible-playbook ./ansible/install-docker.yml --connection=local'
             }
         }    
 
