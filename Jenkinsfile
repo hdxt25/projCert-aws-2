@@ -4,6 +4,7 @@ pipeline {
             filename 'Dockerfile'
             dir './agent'
             args '--name test-server -u root:root -v /var/run/docker.sock:/var/run/docker.sock'
+            reuseNode true
         }
     }
 
