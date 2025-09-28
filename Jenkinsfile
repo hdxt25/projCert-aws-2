@@ -12,7 +12,7 @@ pipeline {
         DOCKER_CONTAINER = "php-container"
     }
 
-    stages { 
+    stages {  
         stage('Install Puppet Agent') {
             steps {
                 sh 'chmod 744 ./ansible/*.yml'
