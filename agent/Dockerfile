@@ -30,6 +30,8 @@ ENV HOME=/home/jenkins
 
 # Switch to jenkins user
 USER jenkins
+RUN mkdir -p /home/jenkins/.ansible && chown -R jenkins:jenkins /home/jenkins/.ansible
+
 WORKDIR /home/jenkins/agent-workspace
 
 # Default command
