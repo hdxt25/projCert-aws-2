@@ -20,19 +20,13 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Add jenkins user and give sudo privileges
-RUN useradd -m -s /bin/bash jenkins \
-    && echo "jenkins ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
-    && usermod -aG docker jenkins
 
-# Set HOME environment variable
-ENV HOME=/home/jenkins
 
 # Switch to jenkins user
-USER jenkins
-RUN mkdir -p /home/jenkins/.ansible && chown -R jenkins:jenkins /home/jenkins/.ansible
+USER root
+RUN mkdir -p /root/.ansible/work 
 
-WORKDIR /home/jenkins/agent-workspace
+WORKDIR /work
 
 # Default command
 CMD ["bash"]
