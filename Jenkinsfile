@@ -15,6 +15,7 @@ pipeline {
     stages {
         stage('Install Puppet Agent') {
             steps {
+                sh 'chmod 744 ./ansible/*.yml'
                 sh 'ansible-playbook -i inventory ./ansible/install-puppet.yml --connection=docker'
             }        
         }

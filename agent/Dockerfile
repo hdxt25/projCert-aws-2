@@ -25,14 +25,12 @@ RUN useradd -m -s /bin/bash jenkins \
     && echo "jenkins ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
     && usermod -aG docker jenkins
 
-# Set working directory for Jenkins jobs
-WORKDIR /home/jenkins/agent-workspace
-
-# Mount Docker socket so docker commands work inside container
-VOLUME /var/run/docker.sock:/var/run/docker.sock
+# Set HOME environment variable
+ENV HOME=/home/jenkins
 
 # Switch to jenkins user
 USER jenkins
+WORKDIR /home/jenkins/agent-workspace
 
 # Default command
 CMD ["bash"]
