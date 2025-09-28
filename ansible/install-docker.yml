@@ -1,8 +1,7 @@
 ---
 - name: Install Docker from Ubuntu repo
-  hosts: localhost
+  hosts: testserver
   become: yes
-  connection: local
 
   tasks:
     - name: Update apt cache

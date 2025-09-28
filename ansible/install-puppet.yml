@@ -1,8 +1,7 @@
 ---
 - name: Install and configure Puppet agent
-  hosts: localhost
+  hosts: testserver
   become: yes
-  connection: local
 
   tasks:
     - name: Update apt cache

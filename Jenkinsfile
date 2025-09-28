@@ -15,13 +15,13 @@ pipeline {
         stage('Install Puppet Agent') {
             steps {
                 
-                sh 'ansible-playbook -i inventory ./ansible/install-puppet.yml --connection=local --become'
+                sh 'ansible-playbook -i inventory ./ansible/install-puppet.yml  --become'
             }        
         }
 
         stage('Install Docker with Ansible') {
             steps {
-                sh 'ansible-playbook -i inventory ./ansible/install-docker.yml --connection=local --become'
+                sh 'ansible-playbook -i inventory ./ansible/install-docker.yml  --become'
             }
         }
         stage('Check versions of all installed software in test-server') {
